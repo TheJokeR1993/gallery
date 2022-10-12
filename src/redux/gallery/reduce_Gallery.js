@@ -22,7 +22,7 @@ const reducer_Gallery = (state = state_gallery, action) => {
       action.setSpiner(false);
       return {
         ...state,
-        allPhoto: action.arr,
+        allPhoto: look_favorite(action.arr,state.favorite) ,
         limit: action.limit,
         page: action.page,
       };
@@ -33,35 +33,42 @@ const reducer_Gallery = (state = state_gallery, action) => {
             ...action.state,
             limit: action.arr[1],
             page: action.arr[0],
-            allPhoto: action.arr[2],
+            allPhoto: look_favorite(action.arr[2],state.favorite),
           }
         : { ...action.state };
 
     case T.CHANGE_LIMIT:
-      return { ...state, limit: action.limit, allPhoto: action.arr };
+     
+      return { ...state, limit: action.limit, allPhoto: look_favorite(action.arr,state.favorite) };
     case T.CHANGE_PAGE:
-      return { ...state, page: action.page, allPhoto: action.arr };
+      
+      return { ...state, page: action.page, allPhoto: look_favorite(action.arr,state.favorite) };
     case T.CHANGE_FAVORITE:
+     
       if (
         state.favorite.length &&
         state.favorite.find((i) => i.id == action.obj.id)
       ) {
         return {
           ...state,
+          allPhoto: change_item_favorite(action.obj,state.allPhoto),
           favorite: state.favorite.filter((i) => i.id !== action.obj.id),
         };
       } else {
-        state.favorite.unshift({
-          ...action.obj,
-          blur: false,
-          grayscale: false,
-        });
-        return state;
+        
+        return {...state, allPhoto: change_item_favorite(action.obj,state.allPhoto),favorite:[action.obj,...state.favorite]};
       }
     default:
       return state;
   }
 };
+
+const change_item_favorite=(obj,state)=> state.map(i=>{i.id===obj.id &&(i.favorite= !i.favorite)
+return i})
+
+const look_favorite=(arr,fav)=>arr.map(i=>{
+ fav.find(ii=>ii.id===i.id)?i.favorite=true:i.favorite=false
+return i})
 
 const change_limit = (limit, arr) => ({ limit, arr, type: T.CHANGE_LIMIT });
 export const R_F_change_limit = (page, limit) => (dispath) => {

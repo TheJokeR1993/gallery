@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState,memo } from "react";
 import icon_black from "../../img/icon_black.png";
 import icon_red from "../../img/icon_red.png";
 
 const PhotoItem = (props) => {
-  const [fav, setFav] = useState(props.favorite);
+  console.log(2);
+  const [like,setLike] = useState(props.item.favorite)
   const [show, setShow] = useState(false);
 
   const size = ["", ""];
@@ -34,9 +35,9 @@ const PhotoItem = (props) => {
         <img
           onClick={() => {
             props.R_F_change_favorite(props.item);
-            setFav(!fav);
+            setLike(!like)
           }}
-          src={fav ? icon_red : icon_black}
+          src={like ? icon_red : icon_black}
         />
       </div>
       {show && (
@@ -58,5 +59,9 @@ const PhotoItem = (props) => {
     </div>
   );
 };
-
-export default PhotoItem;
+const getProps =(prepP,nextP)=>{
+ console.log(1);
+  return prepP.item.favorite===nextP.item.favorite
+ 
+ }
+export default memo(PhotoItem,getProps);

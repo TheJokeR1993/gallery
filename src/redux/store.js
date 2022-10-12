@@ -9,6 +9,7 @@ const allReducers = combineReducers({
 })
 
 const store = createStore(allReducers,applyMiddleware(thunkMiddleware))
+
 store.subscribe(() => L_F_gallery.setItem(store.getState().reducer_Gallery))
  
 export default store

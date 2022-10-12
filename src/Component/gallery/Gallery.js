@@ -24,23 +24,16 @@ const Gallery = ({
 }) => {
 
   const look_photo = useMemo(() => {
-    return reducer_Gallery.allPhoto.map((i) => {
-      const isBool = reducer_Gallery.favorite.length
-        ? reducer_Gallery.favorite.find((el) => el.id === i.id)
-          ? true
-          : false
-        : false;
-
-      return (
+    return reducer_Gallery.allPhoto.map((i) => { return (
         <PhotoItem
           key={i.id}
           item={i}
           R_F_change_favorite={R_F_change_favorite}
-          favorite={isBool}
+          
         />
       );
     });
-  }, [reducer_Gallery]);
+  }, [reducer_Gallery.allPhoto]);
 
   return (
     <div className="gallery">

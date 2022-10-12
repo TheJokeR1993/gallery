@@ -5,10 +5,10 @@ import App from "./App";
 import { HashRouter } from "react-router-dom";
 import store from "./redux/store";
 import { Provider } from "react-redux";
-
+console.log(10)
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <HashRouter basename="/gallery">
+  <HashRouter >
     <Provider store={store}>
       <App />
     </Provider>

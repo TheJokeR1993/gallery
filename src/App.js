@@ -11,7 +11,10 @@ const mapStateToProps = (state) => {
   };
 };
 
+
 const App = ({ reducer_Gallery, R_F_start }) => {
+console.log(reducer_Gallery)
+
   const loook_setting = useLocation()
     .search.split("&")
     .map((i) => (i ? i.split("=")[1] : false));
@@ -37,5 +40,5 @@ const App = ({ reducer_Gallery, R_F_start }) => {
     </>
   );
 };
+export default connect(mapStateToProps, { R_F_start })( App)
 
-export default connect(mapStateToProps, { R_F_start })(App);
